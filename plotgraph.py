@@ -25,14 +25,22 @@ class ReturnSelectionCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         print("ReturnSelection is run.")
         view = self.view
-        selection = view.sel()
-        print(selection)
-        if selection:
+        selections = view.sel()
+        print(selections)
+        lines = []
+        if selections:
             # print the selections
-            for i in selection:
-                print(i)
+            for selection in selections:
+                print(selection)
                 # print the region of the current selection as string
-                print(view.substr(i))
+                print(view.substr(selection))
+                # selection as string
+                selection_str = view.substr(selection) 
+                # split selection at new lines
+                lines_in_selection = selection_str.split("\n")
+                print(lines_in_selection)
+                lines = lines + lines_in_selection
+        print(lines)
 
 
         
