@@ -21,9 +21,20 @@ class MyFirstCommand(sublime_plugin.TextCommand):
 # view.sel() returns the selected area as tuples.
 # Each tuple gives the beginning and end of a sublime.Region
 
-class ReturnSelection(sublime_plugin.TextCommand):
-    def run(self):
+class ReturnSelectionCommand(sublime_plugin.TextCommand):
+    def run(self, edit):
         print("ReturnSelection is run.")
+        view = self.view
+        selection = view.sel()
+        print(selection)
+        if selection:
+            # print the selections
+            for i in selection:
+                print(i)
+                # print the region of the current selection as string
+                print(view.substr(i))
+
+
         
 
 #test change for no reason.
