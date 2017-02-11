@@ -80,12 +80,3 @@ class ReturnSelectionCommand(sublime_plugin.TextCommand):
                                     vectors.append([])
                                 vectors[i].append(numbers_in_line[i])
                                 print("vectors = {0}".format(vectors))
-
-
-
-
-
-
-
-
-        print(lines)
