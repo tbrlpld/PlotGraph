@@ -15,6 +15,13 @@ class MyFirstCommand(sublime_plugin.TextCommand):
         self.view.insert(edit, 0, "This is my test")
 
 
+def is_number(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
+
 # To return the content of a selection as a string:
 # view.substr(view.sel()[0])
 #
