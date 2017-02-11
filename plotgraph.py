@@ -61,7 +61,12 @@ class ReturnSelectionCommand(sublime_plugin.TextCommand):
                         # Check if the word is a number. Only keep numbers. At least in the vector variable.
                         for word in words_in_line:
                             if is_number(word):
-                                numbers_in_line = numbers_in_line + [word]
+                                numbers_in_line = numbers_in_line + [float(word)]
                         print("numbers_in_line = {0}".format(numbers_in_line))
+                        if numbers_in_line:
+                            None
+
+
+
 
         print(lines)
