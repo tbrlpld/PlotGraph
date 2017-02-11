@@ -78,7 +78,10 @@ class ReturnSelectionCommand(sublime_plugin.TextCommand):
                             for i in range(0,len(numbers_in_line),1):
                                 if not is_index(vectors, i): 
                                     vectors.append([])
-                                
+                                vectors[i].append(numbers_in_line[i])
+                                print("vectors = {0}".format(vectors))
+
+
 
 
 
