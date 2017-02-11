@@ -24,6 +24,13 @@ def is_number(s):
     except ValueError:
         return False
 
+def is_index(l, index):
+    try:
+        l[index]
+        return True
+    except IndexError:
+        return False        
+
 # To return the content of a selection as a string:
 # view.substr(view.sel()[0])
 #
@@ -38,6 +45,7 @@ class ReturnSelectionCommand(sublime_plugin.TextCommand):
         selections = view.sel()
         print(selections)
         lines = []
+        vectors = []
         if selections:
             for selection in selections:
                 # print the selections
@@ -55,7 +63,7 @@ class ReturnSelectionCommand(sublime_plugin.TextCommand):
                     if line:
                         lines = lines + [line]
                         # Split the line into "words". (http://stackoverflow.com/a/23720594/6771403)
-                        print(line)
+                        print("line = {0}".format(line))
                         words_in_line = re.split("[, \-!?:]+", line)
                         print("words = {0}".format(words_in_line))
                         # Check if the word is a number. Only keep numbers. At least in the vector variable.
@@ -64,7 +72,15 @@ class ReturnSelectionCommand(sublime_plugin.TextCommand):
                                 numbers_in_line = numbers_in_line + [float(word)]
                         print("numbers_in_line = {0}".format(numbers_in_line))
                         if numbers_in_line:
-                            None
+                            # Take the i-th number in the line and put it into 
+                            # the i-th vector/list in vectors. 
+                            # If there is no i-th vector yet, create it before.
+                            for i in range(0,len(numbers_in_line),1):
+                                if not is_index(vectors, i): 
+                                    vectors.append([])
+                                
+
+
 
 
 
