@@ -74,4 +74,6 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
                     window.run_command("exec", {"shell_cmd" : \
                         "python3.5 plotvectors.py -list_str='{0}'".format(
                             vectors)})
+                    # Suppress the panel showing
+                    window.run_command("hide_panel", {"panel": "output.exec"})
 
