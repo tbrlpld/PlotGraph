@@ -24,8 +24,8 @@ def is_index(l, index):
 # view.sel() returns the selected area as tuples.
 # Each tuple gives the beginning and end of a sublime.Region
 
-# Call per window.run_command("return_selection")
-class ReturnSelectionCommand(sublime_plugin.WindowCommand):
+# Call per window.run_command("plot_graph")
+class PlotGraphCommand(sublime_plugin.WindowCommand):
     # def run(self, edit):
     def run(self):    
         print("ReturnSelection is run.")
