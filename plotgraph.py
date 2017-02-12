@@ -26,9 +26,7 @@ def is_index(l, index):
 
 # Call per window.run_command("plot_graph")
 class PlotGraphCommand(sublime_plugin.WindowCommand):
-    # def run(self, edit):
     def run(self):    
-        print("ReturnSelection is run.")
         window = self.window
         view = window.active_view()
         selections = view.sel()
@@ -38,14 +36,14 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
         if selections:
             for selection in selections:
                 # print the selections
-                print(selection)
+                # print(selection)
                 # print the region of the current selection as string
-                print(view.substr(selection))
+                # print(view.substr(selection))
                 # Selection as string
                 selection_str = view.substr(selection) 
                 # split selection at new lines
                 lines_in_selection = selection_str.split("\n")
-                print(lines_in_selection)
+                # print(lines_in_selection)
                 for line in lines_in_selection:
                     numbers_in_line = []
                     # Only keeping lines that are not empty.
@@ -53,16 +51,16 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
                         lines = lines + [line]
                         # Split the line into "words". 
                         # http://stackoverflow.com/a/23720594/6771403
-                        print("line = {0}".format(line))
+                        # print("line = {0}".format(line))
                         words_in_line = re.split("[, \-!?:]+", line)
-                        print("words = {0}".format(words_in_line))
+                        # print("words = {0}".format(words_in_line))
                         # Check if the word is a number. 
                         # Write numbers to line dependend numbers variable.
                         for word in words_in_line:
                             if is_number(word):
                                 numbers_in_line = numbers_in_line + \
                                                     [float(word)]
-                        print("numbers_in_line = {0}".format(numbers_in_line))
+                        # print("numbers_in_line = {0}".format(numbers_in_line))
                         if numbers_in_line:
                             # Take the i-th number in the line and put it into 
                             # the i-th vector/list in vectors. 
@@ -71,7 +69,7 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
                                 if not is_index(vectors, i): 
                                     vectors.append([])
                                 vectors[i].append(numbers_in_line[i])
-                                print("vectors = {0}".format(vectors))
+                                # print("vectors = {0}".format(vectors))
                 if vectors:
                     window.run_command("exec", {"shell_cmd" : \
                         "python3.5 plotvectors.py -list_str='{0}'".format(
