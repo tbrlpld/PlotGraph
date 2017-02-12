@@ -1,7 +1,8 @@
 import sublime
 import sublime_plugin
 import re
-
+# view.run_command("set_build_system","plotgraph_python")
+# import matplotlib.pyplot as plt
 
 # The command class "ExampleCommand" can be called by view.run_command("example").
 # The "example" is the name of the class "ExampleCommand", stripped by the 
@@ -32,16 +33,18 @@ def is_index(l, index):
         return False        
 
 # To return the content of a selection as a string:
-# view.substr(view.sel()[0])
+# view.substr(view.sel()[0]) 
 #
 # view.sel() returns the selected area as tuples.
 # Each tuple gives the beginning and end of a sublime.Region
 
 # view.run_command("return_selection")
-class ReturnSelectionCommand(sublime_plugin.TextCommand):
-    def run(self, edit):
+class ReturnSelectionCommand(sublime_plugin.WindowCommand):
+    # def run(self, edit):
+    def run(self):    
         print("ReturnSelection is run.")
-        view = self.view
+        window = self.window
+        view = window.active_view()
         selections = view.sel()
         print(selections)
         lines = []
@@ -52,7 +55,7 @@ class ReturnSelectionCommand(sublime_plugin.TextCommand):
                 print(selection)
                 # print the region of the current selection as string
                 print(view.substr(selection))
-                # selection as string
+                # selection as how-do-i-check-if-a-string-is-a-number-float-in-python
                 selection_str = view.substr(selection) 
                 # split selection at new lines
                 lines_in_selection = selection_str.split("\n")
@@ -80,4 +83,11 @@ class ReturnSelectionCommand(sublime_plugin.TextCommand):
                                     vectors.append([])
                                 vectors[i].append(numbers_in_line[i])
                                 print("vectors = {0}".format(vectors))
-                                
+                print("trying to plot")
+                # window.run_command("set_build_system",{"file":"Packages/PlotGraph/plotgraph_python.sublime-build"})
+                # window.run_command("build")
+                window.run_command("exec", {"shell_cmd":"python3.5 plotsomething.py -list_str='{0}'".format(vectors)})
+                # print("trying to plot")
+                # plt.plot([1,2,3,4])
+                # plt.show("hold") 
+
