@@ -1,20 +1,6 @@
 import sublime
 import sublime_plugin
 import re
-# view.run_command("set_build_system","plotgraph_python")
-# import matplotlib.pyplot as plt
-
-# The command class "ExampleCommand" can be called by view.run_command("example").
-# The "example" is the name of the class "ExampleCommand", stripped by the 
-# "Command" and converted to lower case.
-class ExampleCommand(sublime_plugin.TextCommand): 
-    def run(self, edit):
-        self.view.insert(edit, 0, "Hello, World!")
-
-# Just like "ExampleCommand" this class can be called by view.run_command("my_first").
-class MyFirstCommand(sublime_plugin.TextCommand):
-    def run(self, edit):
-        self.view.insert(edit, 0, "This is my test")
 
 # http://stackoverflow.com/questions/354038/ \
 # how-do-i-check-if-a-string-is-a-number-float-in-python
@@ -38,7 +24,7 @@ def is_index(l, index):
 # view.sel() returns the selected area as tuples.
 # Each tuple gives the beginning and end of a sublime.Region
 
-# view.run_command("return_selection")
+# Call per window.run_command("return_selection")
 class ReturnSelectionCommand(sublime_plugin.WindowCommand):
     # def run(self, edit):
     def run(self):    
@@ -83,11 +69,6 @@ class ReturnSelectionCommand(sublime_plugin.WindowCommand):
                                     vectors.append([])
                                 vectors[i].append(numbers_in_line[i])
                                 print("vectors = {0}".format(vectors))
-                print("trying to plot")
-                # window.run_command("set_build_system",{"file":"Packages/PlotGraph/plotgraph_python.sublime-build"})
-                # window.run_command("build")
-                window.run_command("exec", {"shell_cmd":"python3.5 plotsomething.py -list_str='{0}'".format(vectors)})
-                # print("trying to plot")
-                # plt.plot([1,2,3,4])
-                # plt.show("hold") 
+                if vectors:
+                    window.run_command("exec", {"shell_cmd":"python3.5 plotsomething.py -list_str='{0}'".format(vectors)})
 
