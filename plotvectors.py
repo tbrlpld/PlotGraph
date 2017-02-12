@@ -2,10 +2,11 @@
 #   python3.5
 #   python3-tk
 #   matplotlib
-print("This is plotsomething.py")
 import matplotlib.pyplot as plt
 import sys
 import argparse
+
+print("This is plotsomething.py")
 
 # Creating the argument to grab the vector as a printed string from the script 
 # call.

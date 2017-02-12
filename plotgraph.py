@@ -41,7 +41,7 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
                 print(selection)
                 # print the region of the current selection as string
                 print(view.substr(selection))
-                # selection as how-do-i-check-if-a-string-is-a-number-float-in-python
+                # Selection as string
                 selection_str = view.substr(selection) 
                 # split selection at new lines
                 lines_in_selection = selection_str.split("\n")
@@ -51,14 +51,17 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
                     # Only keeping lines that are not empty.
                     if line:
                         lines = lines + [line]
-                        # Split the line into "words". (http://stackoverflow.com/a/23720594/6771403)
+                        # Split the line into "words". 
+                        # http://stackoverflow.com/a/23720594/6771403
                         print("line = {0}".format(line))
                         words_in_line = re.split("[, \-!?:]+", line)
                         print("words = {0}".format(words_in_line))
-                        # Check if the word is a number. Only keep numbers. At least in the vector variable.
+                        # Check if the word is a number. 
+                        # Write numbers to line dependend numbers variable.
                         for word in words_in_line:
                             if is_number(word):
-                                numbers_in_line = numbers_in_line + [float(word)]
+                                numbers_in_line = numbers_in_line + \
+                                                    [float(word)]
                         print("numbers_in_line = {0}".format(numbers_in_line))
                         if numbers_in_line:
                             # Take the i-th number in the line and put it into 
@@ -70,5 +73,7 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
                                 vectors[i].append(numbers_in_line[i])
                                 print("vectors = {0}".format(vectors))
                 if vectors:
-                    window.run_command("exec", {"shell_cmd":"python3.5 plotvectors.py -list_str='{0}'".format(vectors)})
+                    window.run_command("exec", {"shell_cmd" : \
+                        "python3.5 plotvectors.py -list_str='{0}'".format(
+                            vectors)})
 
