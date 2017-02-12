@@ -70,5 +70,5 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
                                 vectors[i].append(numbers_in_line[i])
                                 print("vectors = {0}".format(vectors))
                 if vectors:
-                    window.run_command("exec", {"shell_cmd":"python3.5 plotsomething.py -list_str='{0}'".format(vectors)})
+                    window.run_command("exec", {"shell_cmd":"python3.5 plotvectors.py -list_str='{0}'".format(vectors)})
 
