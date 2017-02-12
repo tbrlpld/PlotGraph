@@ -19,15 +19,6 @@ args = parser.parse_args()
 vectors = eval(args.list_str[0])
 print(vectors)
 
-# print(details.split(","))
-
-
-# vectors = details.split("[]")
-# print(vectors)
-
-# print(sys.argv)
-# vectors = sys.argv[1]
-# print(vectors)
-# print("vectors = {0}".format(vectors))
-# plt.plot([1,2,3,4,3,4])
-# plt.show() 
+if vectors:
+    plt.plot(vectors[:])
+    plt.show() 
