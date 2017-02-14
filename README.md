@@ -1,3 +1,5 @@
+# PlotGraph - A Sublime Text 3 Package
+
 Select the numbers you want to see plotted (with one selection). 
 If other content is also selected, that's ok,
 because the selection will be filtered for numbers.
