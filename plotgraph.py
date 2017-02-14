@@ -42,6 +42,9 @@ def is_index(l, index):
 
 # Call per window.run_command("plot_graph")
 class PlotGraphCommand(sublime_plugin.WindowCommand):
+    def settings(self):
+        return sublime.load_settings('PlotGraph.sublime-settings') 
+               
     def run(self):    
         window = self.window
         view = window.active_view()
@@ -87,9 +90,12 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
                                 vectors[i].append(numbers_in_line[i])
                                 # print("vectors = {0}".format(vectors))
                 if vectors:
+                    # get setting for python executable
+                    python_exec = self.settings().get('python_exec')
                     window.run_command("exec", {"shell_cmd" : \
-                        "python3.5 plotvectors.py -list_str='{0}'".format(
+                        "{0} plotvectors.py -list_str='{1}'".format(
+                            python_exec,
                             vectors)})
                     # Suppress the panel showing
                     window.run_command("hide_panel", {"panel": "output.exec"})
-
+        return None

@@ -1,0 +1,6 @@
+{
+	// Please define the path to your Python executable below.
+	// The python environment started by that executable needs to be able
+	// to run the command "import matplotlib" sucessfully. 
+	"python_exec" : "/usr/bin/python3.5"
+}
