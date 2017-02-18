@@ -151,4 +151,4 @@ ordinate/y-axis for different curves.
 
 ## Issues
 
-Please report issues at [Github](https://github.com/tibsel/PlotGraph/issues)
+Please report issues at [Github](https://github.com/tibsel/PlotGraph/issues).
