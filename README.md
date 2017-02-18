@@ -63,14 +63,16 @@ installation (in which matplotlib is working).
  1. Copy the content of the default PlotGraph settings 
  	to the empty user settings file.
  1. Replace the default value for `python_exec` with the path to your python 
- 	executable. The content of your PlotGraph user setting file should look 
- 	somewhat like this:
- 	
-	```  
+ 	executable.
+ 	The content of your PlotGraph user setting file should look 
+ 	somewhat like this:  
+
+    ```json
 	{ 	
 		"python_exec" : "<path to your python executable>"
 	}
-	```
+    ```
+
  1. Save and close the PlotGraph user settings file.
 
 ### Set Key Bindings
@@ -99,41 +101,54 @@ If other content is also selected, that's ok,
 because the selection will be filtered for numbers.
 Once the selection is made, hit [F3] to create a matplotlib window.
 If you select one column of numbers, they will be printed over their index.
+```
+ 0.0
+ 4.0
+ 3.0
+ 5.0
+ 5.0
+ 5.0
+ 4.0
+ 0.0 
+```
+![Selection](./doc/scrn_selection.png)  
 
-	0.0
- 	4.0
- 	3.0
- 	5.0
- 	5.0
- 	5.0
- 	4.0
- 	0.0 
+![Plot one column](./doc/scrn_1col.png)
 
 
 If you select two columns, the first one will be used as the values on the 
 abscissa/x-axis and the second column as the values on the ordinate/y-axis.
+```
+  1.0  0.0 
+  2.0  4.0 
+  3.0  3.0 
+  4.0  5.0 
+  5.0  5.0 
+  6.0  5.0 
+  7.0  4.0 
+ 18.0  0.0 
+```
 
- 	1.0 0.0 
- 	2.0 4.0 
- 	3.0 3.0 
- 	4.0 5.0 
- 	5.0 5.0 
- 	6.0 5.0 
- 	7.0 4.0 
- 	8.0 0.0 
+![Plot two columns](./doc/scrn_2col.png)
 	
 
 If more than two columns are selected, the first one will be used as the values 
 on the abscissa/x-axis. The other columns will be printed as values on the 
 ordinate/y-axis for different curves.
+```
+  1.0  0.0   11.1
+  2.0  4.0  -11.2
+  3.0  3.0   11.3
+  4.0  5.0  -11.4
+  5.0  5.0   11.5
+  6.0  5.0  -11.6
+  7.0  4.0   11.7
+ 18.0  0.0  -11.8
+```	
 
- 	1.0 0.0 11.1
- 	2.0 4.0 11.2
- 	3.0 3.0 11.3
- 	4.0 5.0 11.4
- 	5.0 5.0 11.5
- 	6.0 5.0 -11.6
- 	7.0 4.0 -11.7
- 	8.0 0.0 -11.8
-	
-	
+![Plot three columns](./doc/scrn_3col.png)
+
+
+## Issues
+
+Please report issues at [Github](https://github.com/tibsel/PlotGraph/issues)
