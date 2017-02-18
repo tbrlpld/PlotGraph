@@ -71,7 +71,7 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
                         # Split the line into "words". 
                         # http://stackoverflow.com/a/23720594/6771403
                         # print("line = {0}".format(line))
-                        words_in_line = re.split("[, \-!?:]+", line)
+                        words_in_line = re.split("[, !?:;$#]+", line)
                         # print("words = {0}".format(words_in_line))
                         # Check if the word is a number. 
                         # Write numbers to line dependend numbers variable.
@@ -93,8 +93,9 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
                     # get setting for python executable
                     python_exec = self.settings().get('python_exec')
                     window.run_command("exec", {"shell_cmd" : \
-                        "{0} plotvectors.py -list_str='{1}'".format(
+                        "{0} {1}/PlotGraph/plotvectors.py -list_str='{2}'".format(
                             python_exec,
+                            sublime.packages_path(),
                             vectors)})
                     # Suppress the panel showing
                     window.run_command("hide_panel", {"panel": "output.exec"})
