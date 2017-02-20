@@ -1,3 +1,3 @@
 [
-	{"keys": ["f3"], "command": "plot_graph"}
+	{"keys": ["ctrl+alt+g"], "command": "plot_graph"}
 ]
