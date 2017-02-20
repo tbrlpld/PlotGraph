@@ -11,12 +11,14 @@ based on multiple number columns.
  -  You need a [python](https://www.python.org/downloads/release/python-360/) 
     installation on your computer. 
     The sublime-internal python is not sufficient.
- -     That python environment needs to have the following modules installed:
+ -  That python environment needs to have the following modules installed:
     -   [matplotlib](http://matplotlib.org/),
     -   [argparse](https://docs.python.org/3/library/argparse.html)
-    -   [ast](https://docs.python.org/3/library/ast.html)
+    -   [ast](https://docs.python.org/3/library/ast.html)  
+
     The latter two are part of the python standard library and are probably 
     available with a standard python installation.
+
  -  To test if your python installation has a module installed, 
      you can do the following:
     -   Open a terminal.
@@ -35,6 +37,7 @@ based on multiple number columns.
  1. Extract the folder `PlotGraph-master` from the downloaded zip archive.
  1. Rename the folder to `PlotGraph`.
  1. Copy the renamed folder into Sublime Text's `Packages` directory.
+ 
     -   If you are not sure where to find that directory, 
         go to Sublime Text 3 `Menu > Preferences > Browse Packages...`.
         This should open a directory in you browser. 
@@ -72,8 +75,8 @@ installation (in which matplotlib and the other modules are working).
 
 ### Set Key Bindings
 
-If your are not happy with using [F3] as the short cut to generate the plot, 
-you can change the key binding:
+If your are not happy with using `[ctrl+alt+g]` as the short cut to 
+generate the plot, you can change the key binding:
 
  1. Open Sublime Text 3.
  1. In the menu navigate to 
@@ -92,7 +95,7 @@ you can change the key binding:
 Select the numbers you want to see plotted (with one selection). 
 If other content is also selected, that's ok, 
 because the selection will be filtered for numbers.
-Once the selection is made, hit [F3] to create a matplotlib window.
+Once the selection is made, hit `[ctrl+alt+g]` to create a matplotlib window.
 If you select one column of numbers, they will be printed over their index.
 ```
  0.0
