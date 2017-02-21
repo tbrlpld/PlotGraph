@@ -93,7 +93,7 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
                     # get setting for python executable
                     python_exec = self.settings().get('python_exec')
                     window.run_command("exec", {"shell_cmd" : \
-                        '{0} {1}/PlotGraph/plotvectors.py -list_str="{2}"'.format(
+                        '"{0}" "{1}/PlotGraph/plotvectors.py" -list_str="{2}"'.format(
                             python_exec,
                             sublime.packages_path(),
                             vectors)})
