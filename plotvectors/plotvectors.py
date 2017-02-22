@@ -1,6 +1,4 @@
-# Required installs:
-#   python3.5
-#   python3-tk
+# Required modules:
 #   matplotlib
 import matplotlib.pyplot as plt
 import sys
