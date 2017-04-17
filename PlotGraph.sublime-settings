@@ -9,5 +9,9 @@
     // installed in a different location then the  executable) the python 
     // libraries can not be found. In that case, define the path to your python
     // libraries in the following variable.
-    "ld_library_path" : ""
+    "ld_library_path" : "",
+    // 
+    // Control if the output panel is shown. Usually only necessary for 
+    // debugging.
+    "show_output_panel" : "False",
 }

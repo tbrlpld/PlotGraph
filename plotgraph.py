@@ -96,7 +96,7 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
                     ld_library_path = self.settings().get('ld_library_path')
                     if ld_library_path:
                         python_exec = 'LD_LIBRARY_PATH={0} '.format(ld_library_path) + '"'+python_exec+'"'
-                        print(python_exec)
+                        # print(python_exec)
                     else:
                         python_exec = '"'+python_exec+'"'
                     window.run_command("exec", {"shell_cmd" : \
@@ -105,5 +105,6 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
                             sublime.packages_path(),
                             vectors)})
                     # Suppress the panel showing
-                    window.run_command("hide_panel", {"panel": "output.exec"})
+                    if self.settings().get("show_output_panel") == "False":
+                        window.run_command("hide_panel", {"panel": "output.exec"})
         return None
