@@ -2,5 +2,16 @@
 	// Please define the path to your Python executable below.
 	// The python environment started by that executable needs to be able
 	// to run the command "import matplotlib" sucessfully. 
-	"python_exec" : "/usr/bin/python3.5"
+	"python_exec" : "/usr/bin/python3.5",
+    // 
+    // The LD_LIBRARY_PATH environment variable should usually not need to be
+    // defined. However, in some environments (when the pyhton libararies are
+    // installed in a different location then the  executable) the python 
+    // libraries can not be found. In that case, define the path to your python
+    // libraries in the following variable.
+    "ld_library_path" : "",
+    // 
+    // Control if the output panel is shown. Usually only necessary for 
+    // debugging.
+    "show_output_panel" : "False",
 }

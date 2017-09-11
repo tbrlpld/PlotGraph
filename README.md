@@ -4,12 +4,14 @@ PlotGraph - A Sublime Text 3 Package
 Plot a column of numbers as a graph, or create a quick curve comparison 
 based on multiple number columns.
 
-##Installation
+
+Installation
+------------
 
 ### Requirements
 
  -  You need a [python](https://www.python.org/downloads/release/python-360/) 
-    installation on your computer. 
+    installation on your computer.
     The sublime-internal python is not sufficient.
  -  That python environment needs to have the following modules installed:
     -   [matplotlib](http://matplotlib.org/),
@@ -26,9 +28,13 @@ based on multiple number columns.
     -   In the started python console, enter e.g.: `import matplotlib`.
     -   If this command finished without an error message you are all set.
 
-### Install Using PackageControl 
+### Install Using Package Control (recommended)
 
- -  *not available yet*
+ -  Install Package Control in Sublime Text. ([How-To](https://packagecontrol.io/installation))
+ -  Once Package Control is installed successfully, hit `[ctrl+shift+p]`.
+ -  In the command line type something like `pa con in pa` and select `Package Control: Install Package` from the drop down list.
+ -  In the search bar type `PlotGraph` and hit `[Enter]`.
+ -  Done.
 
 ### Manual Installation
 
@@ -38,13 +44,15 @@ based on multiple number columns.
  1. Rename the folder to `PlotGraph`.
  1. Copy the renamed folder into Sublime Text's `Packages` directory.
  
-    -   If you are not sure where to find that directory, 
-        go to Sublime Text 3 `Menu > Preferences > Browse Packages...`.
-        This should open a directory in you browser. 
+    - If you are not sure where to find that directory, 
+      go to Sublime Text 3 `Menu > Preferences > Browse Packages...`.
+      This should open a directory in you browser. 
+
  1. Restart Sublime Text 3.
 
 
-## Setup
+Setup
+-----
 
 Once PlotGraph is installed, you need to set the path to your local python 
 installation (in which matplotlib and the other modules are working).
@@ -90,61 +98,63 @@ generate the plot, you can change the key binding:
  1. Save and close the user key bindings file.
 
 
-## Usage
+Usage
+-----
 
 Select the numbers you want to see plotted (with one selection). 
 If other content is also selected, that's ok, 
 because the selection will be filtered for numbers.
 Once the selection is made, hit `[ctrl+alt+g]` to create a matplotlib window.
 If you select one column of numbers, they will be printed over their index.
-```
- 0.0
- 4.0
- 3.0
- 5.0
- 5.0
- 5.0
- 4.0
- 0.0 
-```
+
+    0.0
+    4.0
+    3.0
+    5.0
+    5.0
+    5.0
+    4.0
+    0.0 
+
 ![Selection](./doc/scrn_selection.png)  
 
 ![Plot one column](./doc/scrn_1col.png)
 
-
+  
 If you select two columns, the first one will be used as the values on the 
 abscissa/x-axis and the second column as the values on the ordinate/y-axis.
-```
-  1.0  0.0 
-  2.0  4.0 
-  3.0  3.0 
-  4.0  5.0 
-  5.0  5.0 
-  6.0  5.0 
-  7.0  4.0 
- 18.0  0.0 
-```
+
+     1.0  0.0 
+     2.0  4.0 
+     3.0  3.0 
+     4.0  5.0 
+     5.0  5.0 
+     6.0  5.0 
+     7.0  4.0 
+    18.0  0.0 
+
 
 ![Plot two columns](./doc/scrn_2col.png)
     
-
+  
 If more than two columns are selected, the first one will be used as the values 
 on the abscissa/x-axis. The other columns will be printed as values on the 
 ordinate/y-axis for different curves.
-```
-  1.0  0.0   11.1
-  2.0  4.0  -11.2
-  3.0  3.0   11.3
-  4.0  5.0  -11.4
-  5.0  5.0   11.5
-  6.0  5.0  -11.6
-  7.0  4.0   11.7
- 18.0  0.0  -11.8
-```    
+
+     1.0  0.0   11.1
+     2.0  4.0  -11.2
+     3.0  3.0   11.3
+     4.0  5.0  -11.4
+     5.0  5.0   11.5
+     6.0  5.0  -11.6
+     7.0  4.0   11.7
+    18.0  0.0  -11.8
+
 
 ![Plot three columns](./doc/scrn_3col.png)
 
 
-## Issues
+Issues
+------
 
 Please report issues at [Github](https://github.com/tibsel/PlotGraph/issues).
