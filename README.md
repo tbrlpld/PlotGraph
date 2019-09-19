@@ -10,7 +10,7 @@ Installation
 
 ### Requirements
 
- -  You need a [python](https://www.python.org/downloads/release/python-360/) 
+ -  You need a [python](https://www.python.org/downloads/) 
     installation on your computer.
     The sublime-internal python is not sufficient.
  -  That python environment needs to have the following modules installed:
