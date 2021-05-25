@@ -50,9 +50,9 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
         view = window.active_view()
         selections = view.sel()
         print(selections)
-        vectors = []
         if selections:
             for selection in selections:
+                vectors = []
                 # print the selections
                 # print(selection)
                 # print the region of the current selection as string
