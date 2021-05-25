@@ -5,9 +5,9 @@ import sys
 import argparse
 import ast
 
-# Creating the argument to grab the vector as a printed string from the script 
+# Creating the argument to grab the vector as a printed string from the script
 # call.
-parser = argparse.ArgumentParser() 
+parser = argparse.ArgumentParser()
 parser.add_argument('-list_str', nargs='*', type=str)
 
 # Grabing all arguments
