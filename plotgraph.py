@@ -50,7 +50,6 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
         view = window.active_view()
         selections = view.sel()
         print(selections)
-        lines = []
         vectors = []
         if selections:
             for selection in selections:
@@ -67,7 +66,6 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
                     numbers_in_line = []
                     # Only keeping lines that are not empty.
                     if line:
-                        lines = lines + [line]
                         # Split the line into "words".
                         # http://stackoverflow.com/a/23720594/6771403
                         # print("line = {0}".format(line))
