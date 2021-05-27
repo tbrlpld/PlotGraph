@@ -32,9 +32,30 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
     def settings(self):
         return sublime.load_settings('PlotGraph.sublime-settings')
 
+    def run_plot_script(self, script_name, option, argument):
+        # Get setting for python executable.
+        python_exec = self.settings().get('python_exec')
+        # Get optional setting for library path.
+        ld_library_path = self.settings().get('ld_library_path')
+        if ld_library_path:
+            python_exec = 'LD_LIBRARY_PATH={0} '.format(ld_library_path) + '"'+python_exec+'"'
+            # print(python_exec)
+        else:
+            python_exec = '"'+python_exec+'"'
+
+        self.window.run_command("exec", {"shell_cmd" : \
+            '{0} "{1}/PlotGraph/plotvectors/{2}" {3}="{4}"'.format(
+                python_exec,
+                sublime.packages_path(),
+                script_name,
+                option,
+                argument)})
+        # Suppress the panel showing
+        if self.settings().get("show_output_panel") == "False":
+            self.window.run_command("hide_panel", {"panel": "output.exec"})
+
     def run(self):
-        window = self.window
-        view = window.active_view()
+        view = self.window.active_view()
         selections = view.sel()
         if selections:
             for selection in selections:
@@ -54,23 +75,7 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
                     temp_file = tempfile.NamedTemporaryFile(suffix=".tmp", prefix="plotgraph.", delete=False)
                     temp_file.write(bytes(selection_str+"\n", 'UTF-8'))
                     temp_file.close()
-                    # Get setting for python executable.
-                    python_exec = self.settings().get('python_exec')
-                    # Get optional setting for library path.
-                    ld_library_path = self.settings().get('ld_library_path')
-                    if ld_library_path:
-                        python_exec = 'LD_LIBRARY_PATH={0} '.format(ld_library_path) + '"'+python_exec+'"'
-                        # print(python_exec)
-                    else:
-                        python_exec = '"'+python_exec+'"'
-                    window.run_command("exec", {"shell_cmd" : \
-                        '{0} "{1}/PlotGraph/plotvectors/plotfile.py" --file="{2}"'.format(
-                            python_exec,
-                            sublime.packages_path(),
-                            temp_file.name)})
-                    # Suppress the panel showing
-                    if self.settings().get("show_output_panel") == "False":
-                        window.run_command("hide_panel", {"panel": "output.exec"})
+                    self.run_plot_script("plotfile.py", "--file", temp_file.name)
                     return None
 
                 # split selection at new lines
@@ -102,21 +107,5 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
                                 vectors[i].append(numbers_in_line[i])
                                 # print("vectors = {0}".format(vectors))
                 if vectors:
-                    # Get setting for python executable.
-                    python_exec = self.settings().get('python_exec')
-                    # Get optional setting for library path.
-                    ld_library_path = self.settings().get('ld_library_path')
-                    if ld_library_path:
-                        python_exec = 'LD_LIBRARY_PATH={0} '.format(ld_library_path) + '"'+python_exec+'"'
-                        # print(python_exec)
-                    else:
-                        python_exec = '"'+python_exec+'"'
-                    window.run_command("exec", {"shell_cmd" : \
-                        '{0} "{1}/PlotGraph/plotvectors/plotvectors.py" -list_str="{2}"'.format(
-                            python_exec,
-                            sublime.packages_path(),
-                            vectors)})
-                    # Suppress the panel showing
-                    if self.settings().get("show_output_panel") == "False":
-                        window.run_command("hide_panel", {"panel": "output.exec"})
+                    self.run_plot_script("plotvectors.py", "-list_str", vectors)
         return None
