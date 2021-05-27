@@ -19,22 +19,7 @@ import sublime_plugin
 import re
 import tempfile
 
-
-# http://stackoverflow.com/questions/354038/ \
-# how-do-i-check-if-a-string-is-a-number-float-in-python
-def is_number(s):
-    try:
-        float(s)
-        return True
-    except ValueError:
-        return False
-
-def is_index(l, index):
-    try:
-        l[index]
-        return True
-    except IndexError:
-        return False
+from .plotvectors.common import is_number, is_index
 
 # To return the content of a selection as a string:
 # view.substr(view.sel()[0])
@@ -51,7 +36,6 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
         window = self.window
         view = window.active_view()
         selections = view.sel()
-        print(selections)
         if selections:
             for selection in selections:
                 vectors = []

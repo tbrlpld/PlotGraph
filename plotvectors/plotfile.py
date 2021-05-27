@@ -23,21 +23,7 @@ import os
 import re
 import sys
 
-# http://stackoverflow.com/questions/354038/ \
-# how-do-i-check-if-a-string-is-a-number-float-in-python
-def is_number(s):
-    try:
-        float(s)
-        return True
-    except ValueError:
-        return False
-
-def is_index(l, index):
-    try:
-        l[index]
-        return True
-    except IndexError:
-        return False
+from common import is_number, is_index
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--file', nargs='*', type=str)
