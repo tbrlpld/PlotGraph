@@ -17,6 +17,8 @@
 import sublime
 import sublime_plugin
 import re
+import tempfile
+
 
 # http://stackoverflow.com/questions/354038/ \
 # how-do-i-check-if-a-string-is-a-number-float-in-python
@@ -59,6 +61,34 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
                 # print(view.substr(selection))
                 # Selection as string
                 selection_str = view.substr(selection)
+
+                # Windows cmd.exe has a command line limit of 8192 characters.
+                # We save the selected data to a file (instead of passing it via
+                # the command line) if there is more of it, with a safety margin
+                # to cover formatting overhead and other command line elements.
+                if len(selection_str) > 4096:
+                    temp_file = tempfile.NamedTemporaryFile(suffix=".tmp", prefix="plotgraph.", delete=False)
+                    temp_file.write(bytes(selection_str+"\n", 'UTF-8'))
+                    temp_file.close()
+                    # Get setting for python executable.
+                    python_exec = self.settings().get('python_exec')
+                    # Get optional setting for library path.
+                    ld_library_path = self.settings().get('ld_library_path')
+                    if ld_library_path:
+                        python_exec = 'LD_LIBRARY_PATH={0} '.format(ld_library_path) + '"'+python_exec+'"'
+                        # print(python_exec)
+                    else:
+                        python_exec = '"'+python_exec+'"'
+                    window.run_command("exec", {"shell_cmd" : \
+                        '{0} "{1}/PlotGraph/plotvectors/plotfile.py" --file="{2}"'.format(
+                            python_exec,
+                            sublime.packages_path(),
+                            temp_file.name)})
+                    # Suppress the panel showing
+                    if self.settings().get("show_output_panel") == "False":
+                        window.run_command("hide_panel", {"panel": "output.exec"})
+                    return None
+
                 # split selection at new lines
                 lines_in_selection = selection_str.split("\n")
                 # print(lines_in_selection)
