@@ -16,10 +16,9 @@
 #
 import sublime
 import sublime_plugin
-import re
 import tempfile
 
-from .plotvectors.common import is_number, is_index
+from PlotGraph.plotvectors.common import extract_numbers
 
 # To return the content of a selection as a string:
 # view.substr(view.sel()[0])
@@ -81,31 +80,9 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
                 # split selection at new lines
                 lines_in_selection = selection_str.split("\n")
                 # print(lines_in_selection)
-                for line in lines_in_selection:
-                    numbers_in_line = []
-                    # Only keeping lines that are not empty.
-                    if line:
-                        # Split the line into "words".
-                        # http://stackoverflow.com/a/23720594/6771403
-                        # print("line = {0}".format(line))
-                        words_in_line = re.split("[, !?:;$#]+", line)
-                        # print("words = {0}".format(words_in_line))
-                        # Check if the word is a number.
-                        # Write numbers to line dependend numbers variable.
-                        for word in words_in_line:
-                            if is_number(word):
-                                numbers_in_line = numbers_in_line + \
-                                                    [float(word)]
-                        # print("numbers_in_line = {0}".format(numbers_in_line))
-                        if numbers_in_line:
-                            # Take the i-th number in the line and put it into
-                            # the i-th vector/list in vectors.
-                            # If there is no i-th vector yet, create it before.
-                            for i in range(0,len(numbers_in_line),1):
-                                if not is_index(vectors, i):
-                                    vectors.append([])
-                                vectors[i].append(numbers_in_line[i])
-                                # print("vectors = {0}".format(vectors))
-                if vectors:
+
+                vectors = extract_numbers(lines_in_selection)
+
+                if len(vectors) > 0:
                     self.run_plot_script("plotvectors.py", "-list_str", vectors)
         return None

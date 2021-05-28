@@ -20,10 +20,8 @@
 import matplotlib.pyplot as plt
 import argparse
 import os
-import re
-import sys
 
-from common import is_number, is_index
+from common import extract_numbers
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--file', nargs='*', type=str)
@@ -35,19 +33,9 @@ args = parser.parse_args()
 filename = args.file[0]
 
 vectors = []
+
 with open(filename) as file:
-    for line in file:
-        numbers_in_line = []
-        if line:
-            words_in_line = re.split("[, !?:;$#]+", line)
-            for word in words_in_line:
-                if is_number(word):
-                    numbers_in_line = numbers_in_line + [float(word)]
-            if numbers_in_line:
-                for i in range(0,len(numbers_in_line),1):
-                    if not is_index(vectors, i):
-                        vectors.append([])
-                    vectors[i].append(numbers_in_line[i])
+    vectors = extract_numbers(file)
 
 os.remove(filename)
 
