@@ -20,25 +20,17 @@ import tempfile
 
 from PlotGraph.plotvectors.common import extract_numbers
 
-# To return the content of a selection as a string:
-# view.substr(view.sel()[0])
-#
-# view.sel() returns the selected area as tuples.
-# Each tuple gives the beginning and end of a sublime.Region
-
 # Call per window.run_command("plot_graph")
 class PlotGraphCommand(sublime_plugin.WindowCommand):
     def settings(self):
         return sublime.load_settings('PlotGraph.sublime-settings')
 
     def run_plot_script(self, script_name, option, argument):
-        # Get setting for python executable.
         python_exec = self.settings().get('python_exec')
-        # Get optional setting for library path.
+        # library path setting is optional.
         ld_library_path = self.settings().get('ld_library_path')
         if ld_library_path:
             python_exec = 'LD_LIBRARY_PATH={0} '.format(ld_library_path) + '"'+python_exec+'"'
-            # print(python_exec)
         else:
             python_exec = '"'+python_exec+'"'
 
@@ -49,21 +41,23 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
                 script_name,
                 option,
                 argument)})
-        # Suppress the panel showing
+        # Suppress the panel showing plugin printouts
         if self.settings().get("show_output_panel") == "False":
             self.window.run_command("hide_panel", {"panel": "output.exec"})
 
     def run(self):
+
+        # To return the content of a selection as a string:
+        # view.substr(view.sel()[0])
+        #
+        # view.sel() returns the selected area as tuples.
+        # Each tuple gives the beginning and end of a sublime.Region
+
         view = self.window.active_view()
         selections = view.sel()
         if selections:
             for selection in selections:
                 vectors = []
-                # print the selections
-                # print(selection)
-                # print the region of the current selection as string
-                # print(view.substr(selection))
-                # Selection as string
                 selection_str = view.substr(selection)
 
                 # Windows cmd.exe has a command line limit of 8192 characters.
@@ -77,9 +71,7 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
                     self.run_plot_script("plotvectors.py", "--file", temp_file.name)
 
                 else:
-                    # split selection at new lines
                     lines_in_selection = selection_str.split("\n")
-                    # print(lines_in_selection)
                     vectors = extract_numbers(lines_in_selection)
                     if len(vectors) > 0:
                         self.run_plot_script("plotvectors.py", "--list_str", vectors)

@@ -23,13 +23,16 @@ import matplotlib.pyplot as plt
 
 from common import extract_numbers
 
-# Creating the argument to grab the vector as a printed string from the script
-# call.
+# Arguments
+# --list_str to grab the vector as a printed string
+#            from the script call, or
+# --file to read the selection from a file
+
 parser = argparse.ArgumentParser()
 parser.add_argument('--list_str', nargs='*', type=str)
 parser.add_argument('--file', nargs='*', type=str)
 
-# Grabing all arguments
+# Grabbing all arguments
 args = parser.parse_args()
 
 if args.file:
@@ -40,10 +43,7 @@ if args.file:
     os.remove(filename)
 
 else:
-    # Evaluating the list_str argument as literal
     vectors = ast.literal_eval(args.list_str[0])
-
-# print(vectors)
 
 if len(vectors) == 1:
     plt.plot(vectors[0])

@@ -42,16 +42,13 @@ def extract_numbers(line_iter):
         if line:
             # Split the line into "words".
             # http://stackoverflow.com/a/23720594/6771403
-            # print("line = {0}".format(line))
             words_in_line = re.split("[, !?:;$#]+", line)
-            # print("words = {0}".format(words_in_line))
-            # Check if the word is a number.
-            # Write numbers to line dependend numbers variable.
+            # Collect the words which are numbers in the numbers_in_line variable
             for word in words_in_line:
                 if is_number(word):
                     numbers_in_line = numbers_in_line + \
                                         [float(word)]
-            # print("numbers_in_line = {0}".format(numbers_in_line))
+
             if numbers_in_line:
                 # Take the i-th number in the line and put it into
                 # the i-th vector/list in vectors.
@@ -60,5 +57,5 @@ def extract_numbers(line_iter):
                     if not is_index(vectors, i):
                         vectors.append([])
                     vectors[i].append(numbers_in_line[i])
-                    # print("vectors = {0}".format(vectors))
+
     return vectors
