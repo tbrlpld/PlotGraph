@@ -59,21 +59,23 @@ if len(vectors) == 1:
         plt.plot(vectors[0])
 
 elif len(vectors) > 1:
+    vector_x = vectors[0]
+    vectors_y = vectors[1:]
+
     # check vector format
     column_length_issue = False
-    first_length = len(vectors[0])
-    for i in range(1, len(vectors), 1):
-        if len(vectors[i]) != first_length:
+    for vector_y in vectors_y:
+        if len(vector_y) != len(vector_x):
             column_length_issue = True
             break
     if column_length_issue:
         show_error_message("selected columns have different numbers of rows")
-    elif first_length == 1:
+    elif len(vector_x) == 1:
         show_error_message("need at least two rows of numbers to draw a graph")
     else:
         # vector format is OK
-        for i in range(1, len(vectors), 1):
-            plt.plot(vectors[0],vectors[i])
+        for vector_y in vectors_y:
+            plt.plot(vector_x, vector_y)
 else:
     show_error_message("no numbers in selection")
 
