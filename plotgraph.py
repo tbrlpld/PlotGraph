@@ -75,14 +75,12 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
                     temp_file.write(bytes(selection_str+"\n", 'UTF-8'))
                     temp_file.close()
                     self.run_plot_script("plotfile.py", "--file", temp_file.name)
-                    return None
 
-                # split selection at new lines
-                lines_in_selection = selection_str.split("\n")
-                # print(lines_in_selection)
-
-                vectors = extract_numbers(lines_in_selection)
-
-                if len(vectors) > 0:
-                    self.run_plot_script("plotvectors.py", "-list_str", vectors)
+                else:
+                    # split selection at new lines
+                    lines_in_selection = selection_str.split("\n")
+                    # print(lines_in_selection)
+                    vectors = extract_numbers(lines_in_selection)
+                    if len(vectors) > 0:
+                        self.run_plot_script("plotvectors.py", "-list_str", vectors)
         return None
