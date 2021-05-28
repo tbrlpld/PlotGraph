@@ -73,6 +73,5 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
                 else:
                     lines_in_selection = selection_str.split("\n")
                     vectors = extract_numbers(lines_in_selection)
-                    if len(vectors) > 0:
-                        self.run_plot_script("plotvectors.py", "--list_str", vectors)
+                    self.run_plot_script("plotvectors.py", "--list_str", vectors)
         return None

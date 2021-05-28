@@ -23,6 +23,13 @@ import matplotlib.pyplot as plt
 
 from common import extract_numbers
 
+def show_error_message(message):
+    ax = plt.axes()
+    ax.text(0.5, 0.5, message,
+            ha="center", va="center",
+            transform=ax.transAxes,
+            wrap=True)
+
 # Arguments
 # --list_str to grab the vector as a printed string
 #            from the script call, or
@@ -46,8 +53,28 @@ else:
     vectors = ast.literal_eval(args.list_str[0])
 
 if len(vectors) == 1:
-    plt.plot(vectors[0])
+    if len(vectors[0]) == 1:
+        show_error_message("cannot draw a diagram from a single number")
+    else:
+        plt.plot(vectors[0])
+
 elif len(vectors) > 1:
+    # check vector format
+    column_length_issue = False
+    first_length = len(vectors[0])
     for i in range(1, len(vectors), 1):
-        plt.plot(vectors[0],vectors[i])
+        if len(vectors[i]) != first_length:
+            column_length_issue = True
+            break
+    if column_length_issue:
+        show_error_message("selected columns have different numbers of rows")
+    elif first_length == 1:
+        show_error_message("need at least two rows of numbers to draw a graph")
+    else:
+        # vector format is OK
+        for i in range(1, len(vectors), 1):
+            plt.plot(vectors[0],vectors[i])
+else:
+    show_error_message("no numbers in selection")
+
 plt.show()
