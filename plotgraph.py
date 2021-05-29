@@ -25,6 +25,68 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
     def settings(self):
         return sublime.load_settings('PlotGraph.sublime-settings')
 
+    def is_column_selection(self, view, selections):
+        # In sublime, a column selection is a set of typically rectangular
+        # selection areas that are created using commands like
+        # Ctrl-Alt-Up/Down followed by Shift-Left/Right
+        # Shift-Right-Mouse-Drag (select first area)
+        # Ctrl-Shift-Right-Mouse-Drag (add more areas)
+        # Ctrl-Shift-L (make a column selection from a regular one)
+        #
+        # The characteristical property of a column selection
+        # is that each subselection spans only a single line.
+        # Since these single lines would not make a good graph each by its own,
+        # we can join them all together for a single drawing.
+        # The selections are sorted top down and left-right, so joining is easy.
+        #
+        # With the multi-rectangular selection, the user can do things
+        # not possible otherwise, for example select some of the columns
+        # of a table of numbers, sparsely. The sparseness may be both vertical
+        # as well as horizontal, i.e. both some rows or columns may be ommitted.
+        # You may have diagonally shifted selections or rectangular subareas
+        # of variable width to cover different number length.
+        #
+        # If a column selection is recognized, even if it is a sparse one
+        # (for example, two separated sets of adjacent rows),
+        # still all data is presented in a single diagram. This way, by turning
+        # two normal selections into column selections using Ctrl-Shift-L,
+        # the user can enforce to get a single diagram.
+
+        if len(selections) < 2:
+            return False
+
+        for selection in selections:
+            if selection.size() == 0:
+                # Empty selections are ignored (you get them if you use
+                # Ctrl-Shift-Right-Mouse-Drag for the first selection)
+                continue
+
+            # A selection is a region, the begin/end of a region is a point (an int),
+            # a rowcol is a tuple of two integers, row and col.
+            (r0, _) = view.rowcol(selection.begin())
+            (r1, _) = view.rowcol(selection.end())
+
+            if r0 != r1:
+                return False
+
+        return True # all single-line selections
+
+    def join_column_selections_to_string(self, view, selections):
+        selection_str = ""
+        row = None
+        for selection in selections:
+            (r0, _) = view.rowcol(selection.begin())
+            if r0 != row:
+                if row != None:
+                    selection_str += "\n"
+                row = r0
+            else:
+                selection_str += " "
+            selection_str += view.substr(selection)
+        selection_str += "\n"
+        return selection_str
+
+
     def run_plot_script(self, script_name, option, argument):
         python_exec = self.settings().get('python_exec')
         # library path setting is optional.
@@ -56,9 +118,13 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
         view = self.window.active_view()
         selections = view.sel()
         if selections:
-            for selection in selections:
+            if self.is_column_selection(view, selections):
+                selection_strings = [self.join_column_selections_to_string(view, selections)]
+            else:
+                selection_strings = (view.substr(selection) for selection in selections)
+
+            for selection_str in selection_strings:
                 vectors = []
-                selection_str = view.substr(selection)
 
                 # Windows cmd.exe has a command line limit of 8192 characters.
                 # We save the selected data to a file (instead of passing it via
