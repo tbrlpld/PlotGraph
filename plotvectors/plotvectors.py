@@ -95,8 +95,24 @@ elif len(vectors) > 1:
         show_error_message("need at least two rows of numbers to draw a graph")
     else:
         # vector format is OK
-        for vector_y in vectors_y:
-            plt.plot(vector_x, vector_y)
+        for i, vector_y in enumerate(vectors_y):
+            plt.plot(vector_x, vector_y, label=str(i+1))
+
+        # after ten plots colors are repeating, so it makes no sense to label them
+        plot_count = len(vectors_y)
+        if plot_count <= 10:
+            plt.axes().legend(bbox_to_anchor=(0., 1.05, 1., .1),
+                              loc='lower left',
+                              handlelength=1.0,
+                              borderaxespad=0.2,
+                              borderpad=0.2,
+                              mode = "expand" if plot_count > 7 else None,
+                              ncol=len(vectors_y))
+            #plt.axes().legend(bbox_to_anchor=(1.0, 1.0),
+            #                  loc='upper left',
+            #                  handlelength=0.5,
+            #                  borderaxespad=0.2,
+            #                  borderpad=0.2)
 else:
     show_error_message("no numbers in selection")
 
