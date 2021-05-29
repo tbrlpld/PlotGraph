@@ -14,12 +14,33 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-import argparse
-import ast
 import os
+import sys
 
-# Required non-standard modules:
-import matplotlib.pyplot as plt
+try:
+    import ast
+    import argparse
+except ImportError:
+    print("python path: {0}".format(sys.executable if sys.executable != None else "not available"))
+    print("python version: {0}".format(sys.version))
+    print()
+    print("PlotGraph requires the modules argparse and ast, which are missing.")
+    print("Please update to a newer python version (2.7/3.2 or better).")
+    exit(1)
+
+try:
+    import matplotlib.pyplot as plt
+except ImportError as error:
+    print("python path: {0}".format(sys.executable if sys.executable != None else "not available"))
+    print("python version: {0}".format(sys.version))
+    print()
+    print("{0}: {1}".format(error.__class__.__name__, error))
+    print()
+    print("PlotGraph requires matplotlib to be installed.")
+    print("To install:")
+    print("  python -m pip install -U pip")
+    print("  python -m pip install -U matplotlib")
+    exit(1)
 
 from common import extract_numbers
 
