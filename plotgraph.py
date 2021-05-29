@@ -14,11 +14,30 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-import sublime
-import sublime_plugin
 import tempfile
 
+import sublime
+import sublime_plugin
+import Default.exec
+
 from PlotGraph.plotvectors.common import extract_numbers
+
+
+class PlotGraphExecCommand(Default.exec.ExecCommand):
+    def on_finished(self, proc):
+        super(PlotGraphExecCommand, self).on_finished(proc)
+        exit_code = proc.exit_code()
+        if exit_code != 0 and exit_code is not None:
+            panel_view = self.window.find_output_panel("exec")
+            output_panel_is_visible = panel_view != None and panel_view.window() != None
+            if not output_panel_is_visible:
+                self.window.run_command("show_panel", {"panel": "output.exec"})
+                # we popped up a panel the user might have never seen before,
+                # so give her a hint how to close it
+                self.window.find_output_panel("exec").run_command("append", {
+                        "panel": "output.exec",
+                        "characters": "\n<press Esc to close this panel>\n"
+                    })
 
 # Call per window.run_command("plot_graph")
 class PlotGraphCommand(sublime_plugin.WindowCommand):
@@ -88,6 +107,9 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
 
 
     def run_plot_script(self, script_name, option, argument):
+        panel_view = self.window.find_output_panel("exec")
+        output_panel_was_visible = panel_view != None and panel_view.window() != None
+
         python_exec = self.settings().get('python_exec')
         # library path setting is optional.
         ld_library_path = self.settings().get('ld_library_path')
@@ -96,15 +118,16 @@ class PlotGraphCommand(sublime_plugin.WindowCommand):
         else:
             python_exec = '"'+python_exec+'"'
 
-        self.window.run_command("exec", {"shell_cmd" : \
+        self.window.run_command("plot_graph_exec", {"shell_cmd" : \
             '{0} "{1}/PlotGraph/plotvectors/{2}" {3}="{4}"'.format(
                 python_exec,
                 sublime.packages_path(),
                 script_name,
                 option,
-                argument)})
-        # Suppress the panel showing plugin printouts
-        if self.settings().get("show_output_panel") == "False":
+                argument), "quiet" : True})
+
+        # Prevent the panel showing plugin printouts from popping up
+        if not output_panel_was_visible and self.settings().get("show_output_panel") == "False":
             self.window.run_command("hide_panel", {"panel": "output.exec"})
 
     def run(self):
