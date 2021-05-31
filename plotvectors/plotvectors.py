@@ -45,7 +45,7 @@ except ImportError as error:
 from common import extract_numbers
 
 def show_error_message(message):
-    ax = plt.axes()
+    ax = plt.gca()
     ax.text(0.5, 0.5, message,
             ha="center", va="center",
             transform=ax.transAxes,
@@ -101,14 +101,14 @@ elif len(vectors) > 1:
         # after ten plots colors are repeating, so it makes no sense to label them
         plot_count = len(vectors_y)
         if plot_count <= 10:
-            plt.axes().legend(bbox_to_anchor=(0., 1.05, 1., .1),
+            plt.gca().legend(bbox_to_anchor=(0., 1.05, 1., .1),
                               loc='lower left',
                               handlelength=1.0,
                               borderaxespad=0.2,
                               borderpad=0.2,
                               mode = "expand" if plot_count > 7 else None,
                               ncol=len(vectors_y))
-            #plt.axes().legend(bbox_to_anchor=(1.0, 1.0),
+            #plt.gca().legend(bbox_to_anchor=(1.0, 1.0),
             #                  loc='upper left',
             #                  handlelength=0.5,
             #                  borderaxespad=0.2,
